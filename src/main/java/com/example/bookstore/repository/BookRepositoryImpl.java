@@ -1,18 +1,24 @@
 package com.example.bookstore.repository;
 
 import com.example.bookstore.model.Book;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaQuery;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
+import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-@RequiredArgsConstructor
 @Repository
 public class BookRepositoryImpl implements BookRepository {
     private final SessionFactory sessionFactory;
+
+    @Autowired
+    public BookRepositoryImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public Book save(Book book) {
@@ -44,6 +50,14 @@ public class BookRepositoryImpl implements BookRepository {
             return session.createQuery(criteriaQuery).getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Can't get all books", e);
+        }
+    }
+
+    @Override
+    public Optional<Book> findBookById(Long id) {
+        try (EntityManager entityManager = sessionFactory.createEntityManager()) {
+            Book book = entityManager.find(Book.class, id);
+            return book != null ? Optional.of(book) : Optional.empty();
         }
     }
 }

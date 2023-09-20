@@ -6,11 +6,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.math.BigDecimal;
-import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Book {
     @Id
@@ -27,6 +29,19 @@ public class Book {
     private BigDecimal price;
     private String description;
     private String coverImage;
+
+    public Book(Long id, String title,
+                String author, String isbn,
+                BigDecimal price, String description,
+                String coverImage) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.isbn = isbn;
+        this.price = price;
+        this.description = description;
+        this.coverImage = coverImage;
+    }
 
     public Book(String title, String author,
                 String isbn, BigDecimal price,
