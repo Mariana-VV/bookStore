@@ -1,12 +1,15 @@
 package com.example.bookstore.service;
 
-import com.example.bookstore.model.Book;
+import com.example.bookstore.dto.BookDto;
+import com.example.bookstore.dto.CreateBookRequestDto;
 import java.util.List;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public interface BookService {
-    Book save(Book book);
+    BookDto createBook(CreateBookRequestDto requestDto);
 
-    List<Book> findAll();
+    List<BookDto> findAll();
+
+    BookDto getBookById(Long id);
 }
