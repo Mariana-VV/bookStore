@@ -9,6 +9,8 @@ import com.example.bookstore.repository.BookRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @RequiredArgsConstructor
@@ -29,10 +31,35 @@ public class BookServiceImpl implements BookService {
                 .toList();
     }
 
-    public BookDto getBookById(Long id) {
-        Book book = bookRepository.findBookById(id)
+    public BookDto findBookById(Long id) {
+        Book book = bookRepository.findById(id)
                 .orElseThrow(() ->
-                        new EntityNotFoundException("Cant find book bei id " + id));
+                        new EntityNotFoundException(
+                                "Cant find book bei id " + id));
+        return bookMapper.toDto(book);
+    }
+
+    @Override
+    public List<BookDto> findBookByTitleIgnoreCase(String name) {
+        return bookRepository.findBookByTitleIgnoreCase(name).stream()
+                .toList();
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        bookRepository.deleteById(id);
+    }
+
+    @Override
+    public BookDto update(@RequestBody CreateBookRequestDto createBookRequestDto,
+                          @PathVariable Long id) {
+        if (!bookRepository.existsById(id)) {
+            throw new EntityNotFoundException("Entity exist nicht");
+        }
+        Book book = bookMapper.toModel(createBookRequestDto);
+        book.setId(id);
+        book = bookRepository.save(book);
+
         return bookMapper.toDto(book);
     }
 }
