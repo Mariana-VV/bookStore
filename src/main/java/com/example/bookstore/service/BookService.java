@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface BookService {
     BookDto createBook(CreateBookRequestDto requestDto);
 
-    List<BookDto> findAll(Pageable pageable);
+    List<BookDto> findAll(String email, Pageable pageable);
 
     BookDto findBookById(Long id);
 
