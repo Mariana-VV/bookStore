@@ -17,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @EnableMethodSecurity
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -43,7 +45,7 @@ public class SecurityConfig {
                                 .authenticated()
                 )
 
-                //                .httpBasic(withDefaults())
+                         .httpBasic(withDefaults())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter,

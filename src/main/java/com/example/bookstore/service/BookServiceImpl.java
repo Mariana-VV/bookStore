@@ -1,14 +1,19 @@
 package com.example.bookstore.service;
 
-import com.example.bookstore.dto.BookDto;
+
+import com.example.bookstore.dto.BookResponseDto;
 import com.example.bookstore.dto.CreateBookRequestDto;
+import com.example.bookstore.dto.category.BookDtoWithoutCategoryIds;
 import com.example.bookstore.exception.EntityNotFoundException;
 import com.example.bookstore.mapper.BookMapper;
 import com.example.bookstore.model.Book;
 import com.example.bookstore.repository.BookRepository;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,21 +25,20 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
-    public BookDto createBook(CreateBookRequestDto requestDto) {
+    public BookResponseDto createBook(CreateBookRequestDto requestDto) {
         Book book = bookMapper.toModel(requestDto);
         return bookMapper.toDto(bookRepository.save(book));
     }
 
     @Override
-    public List<BookDto> findAll(String email, Pageable pageable) {
+    public List<BookResponseDto> findAll(String email, Pageable pageable) {
         return bookRepository.findAll(pageable).stream()
                 .map(bookMapper::toDto)
                 .toList();
     }
 
-    public BookDto findBookById(Long id) {
+    public BookResponseDto findBookById(Long id) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() ->
                         new EntityNotFoundException(
@@ -43,7 +47,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> findBookByTitleIgnoreCase(String name) {
+    public List<BookResponseDto> findBookByTitleIgnoreCase(String name) {
         return bookRepository.findBookByTitleIgnoreCase(name).stream()
                 .toList();
     }
@@ -54,8 +58,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto update(@RequestBody CreateBookRequestDto createBookRequestDto,
-                          @PathVariable Long id) {
+    public BookResponseDto update(CreateBookRequestDto createBookRequestDto,
+                           Long id) {
         if (!bookRepository.existsById(id)) {
             throw new EntityNotFoundException("Entity exist nicht");
         }
@@ -64,5 +68,13 @@ public class BookServiceImpl implements BookService {
         book = bookRepository.save(book);
 
         return bookMapper.toDto(book);
+    }
+
+    @Override
+    public List<BookDtoWithoutCategoryIds> findAllBooksByCategoryId(Long categoryId) {
+
+        return bookRepository.findAllByCategoryId(categoryId).stream()
+                .map(x->bookMapper.toDtoWithoutCategories(x))
+                .collect(Collectors.toList());
     }
 }

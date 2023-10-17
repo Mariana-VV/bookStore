@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-role-to-user
+      author: bookstore
+      changes:
+          - addForeignKeyConstraint:
+              baseColumnNames: user_id
+              baseTableName: users_roles
+              constraintName: fk_user_role
+              deferrable: false
+              initiallyDeferred: false
+              onDelete: NO ACTION
+              onUpdate: NO ACTION
+              referencedColumnNames: id
+              referencedTableName: users
+          - addForeignKeyConstraint:
+              baseColumnNames: roles_id
+              baseTableName: users_roles
+              constraintName: fk1_user_role
+              deferrable: false
+              initiallyDeferred: false
+              onDelete: NO ACTION
+              onUpdate: NO ACTION
+              referencedColumnNames: id
+              referencedTableName: roles

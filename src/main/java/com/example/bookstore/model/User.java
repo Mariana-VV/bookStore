@@ -33,14 +33,14 @@ public class User implements UserDetails {
     private String email;
     @Column(nullable = false)
     private String password;
-    //        @Column(nullable = false)
+    @Column(name = "first_name", nullable = false)
     private String firstName;
-    //        @Column(nullable = false)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
     private String shippingAddress;
     @Column(name = "is_deleted")
     private boolean isDeleted;
-    @ManyToMany
+    @ManyToMany()
     @JoinColumn(name = "user_id")
     private Set<Role> roles;
 

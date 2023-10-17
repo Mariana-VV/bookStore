@@ -7,28 +7,44 @@ import com.example.bookstore.mapper.UserMapper;
 import com.example.bookstore.model.User;
 import com.example.bookstore.repository.UserRepository;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
+
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UserResponseDto register(@Valid UserRegistrationRequestDto request)
+    public UserResponseDto register( UserRegistrationRequestDto request)
             throws RegistrationException {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new RegistrationException("Unable to complete registration.");
         }
+
         User user = new User();
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setPassword((request.getPassword()));
         user.setEmail(request.getEmail());
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
         User savedUser = userRepository.save(user);
 
         return userMapper.toDto(savedUser);
     }
+
+
+
+//{
+//        "email":"fuhjhjhjhjjjjjk@example.com",
+//                "password":"1234",
+//                "repeatPassword":"1335555",
+//                "firstName":"AAAAAAAAAAAA",
+//                "lastName":"AAAAAAAAAAAA",
+//                "adress":"öalfhjlad"
+//
+//    }
 }

@@ -1,23 +1,28 @@
 package com.example.bookstore.service;
 
-import com.example.bookstore.dto.BookDto;
+import com.example.bookstore.dto.BookResponseDto;
 import com.example.bookstore.dto.CreateBookRequestDto;
 import java.util.List;
+
+import com.example.bookstore.dto.category.BookDtoWithoutCategoryIds;
+import com.example.bookstore.model.Book;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 public interface BookService {
-    BookDto createBook(CreateBookRequestDto requestDto);
+    BookResponseDto createBook(CreateBookRequestDto requestDto);
 
-    List<BookDto> findAll(String email, Pageable pageable);
+    List<BookResponseDto> findAll(String email, Pageable pageable);
 
-    BookDto findBookById(Long id);
+    BookResponseDto findBookById(Long id);
 
-    List<BookDto> findBookByTitleIgnoreCase(String name);
+    List<BookResponseDto> findBookByTitleIgnoreCase(String name);
 
     void deleteById(Long id);
 
-    BookDto update(@RequestBody CreateBookRequestDto createBookRequestDto, @PathVariable Long id);
+    BookResponseDto update(@RequestBody CreateBookRequestDto createBookRequestDto, @PathVariable Long id);
 
+    List<BookDtoWithoutCategoryIds> findAllBooksByCategoryId(Long categoryId);
 }

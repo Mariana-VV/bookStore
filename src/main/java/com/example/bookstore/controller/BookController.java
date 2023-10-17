@@ -1,9 +1,11 @@
 package com.example.bookstore.controller;
 
-import com.example.bookstore.dto.BookDto;
+import com.example.bookstore.dto.BookResponseDto;
 import com.example.bookstore.dto.CreateBookRequestDto;
+import com.example.bookstore.model.Book;
 import com.example.bookstore.repository.UserRepository;
 import com.example.bookstore.service.BookService;
+import com.example.bookstore.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,10 +33,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
     private final BookService bookService;
     private final UserRepository userRepository;
+    private final CategoryService categoryService;
 
     @GetMapping
     @Operation(summary = "Get all books", description = "Get a list of all available products")
-    public List<BookDto> findAll(Authentication authentication, Pageable pageable) {
+    public List<BookResponseDto> findAll(Authentication authentication, Pageable pageable) {
         String email = authentication.getName();
         return bookService.findAll(email, pageable);
     }
@@ -48,24 +52,28 @@ public class BookController {
     @PostMapping
     @Operation(summary = "Create a new book", description = "Create a new book")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public BookDto save(@RequestBody CreateBookRequestDto requestDto) {
+    public BookResponseDto save(@RequestBody CreateBookRequestDto requestDto) {
         return bookService.createBook(requestDto);
     }
 
     @GetMapping("/{id}")
-    public BookDto getBookById(@PathVariable Long id) {
+    public BookResponseDto getBookById(@PathVariable Long id) {
         return bookService.findBookById(id);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         bookService.deleteById(id);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
-    public BookDto update(@RequestBody @Valid CreateBookRequestDto createBookRequestDto,
-                          @PathVariable Long id) {
+    public BookResponseDto update(@RequestBody @Valid CreateBookRequestDto createBookRequestDto,
+                                  @PathVariable Long id) {
         return bookService.update(createBookRequestDto, id);
     }
+
+
 }

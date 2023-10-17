@@ -1,7 +1,9 @@
 package com.example.bookstore.validation;
 
+import com.example.bookstore.dto.user.UserRegistrationRequestDto;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.BeanWrapperImpl;
 
 public class FieldMatchValidator
@@ -9,11 +11,11 @@ public class FieldMatchValidator
     private String field;
     private String fieldMatch;
 
+
     public void initialize(FieldMatch constraintAnnotation) {
         this.field = constraintAnnotation.field();
         this.fieldMatch = constraintAnnotation.fieldMatch();
     }
-
     public boolean isValid(Object value,
                            ConstraintValidatorContext context) {
 

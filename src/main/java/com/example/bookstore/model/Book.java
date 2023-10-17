@@ -5,8 +5,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,39 +45,7 @@ public class Book {
     @Column(nullable = false)
     private boolean isDeleted;
 
-    public Book(Long id, String title,
-                String author, String isbn,
-                BigDecimal price, String description,
-                String coverImage, boolean isDeleted) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.isbn = isbn;
-        this.price = price;
-        this.description = description;
-        this.coverImage = coverImage;
-        this.isDeleted = isDeleted;
-    }
+   @ManyToMany
+    private Set<Category> category;
 
-    public Book(String title, String author,
-                String isbn, BigDecimal price,
-                String description, String coverImage) {
-        this.title = title;
-        this.author = author;
-        this.isbn = isbn;
-        this.price = price;
-        this.description = description;
-        this.coverImage = coverImage;
-    }
-
-    @Override
-    public String toString() {
-        return "Book{" + "id=" + id
-                + ", title='" + title + '\''
-                + ", author='" + author + '\''
-                + ", isbn='" + isbn + '\''
-                + ", price=" + price
-                + ", description='" + description + '\''
-                + ", coverImage='" + coverImage + '\'' + '}';
-    }
 }

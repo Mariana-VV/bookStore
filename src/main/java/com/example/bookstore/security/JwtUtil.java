@@ -37,7 +37,6 @@ public class JwtUtil {
         try {
             Jws<Claims> claimsJws = Jwts.parserBuilder()
                     .setSigningKey(secret)
-
                     .build()
                     .parseClaimsJws(token);
             return claimsJws.getBody().getExpiration().before(new Date());
@@ -52,6 +51,7 @@ public class JwtUtil {
 
     private <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = Jwts.parserBuilder()
+                .setSigningKey(secret)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
