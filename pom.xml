@@ -76,17 +76,7 @@
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>6.0.10.Final</version>
-        </dependency>
 
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>1.1.0.Final</version>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -103,11 +93,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>commons-beanutils</groupId>-->
-<!--            <artifactId>commons-beanutils</artifactId>-->
-<!--            <version>1.9.4</version>-->
-<!--        </dependency>-->
+
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -125,11 +111,6 @@
             <version>${jjwt.version}</version>
             <scope>runtime</scope>
         </dependency>
-        <dependency>
-            <groupId>com.stephenduncanjr</groupId>
-            <artifactId>easymock-propertyutils</artifactId>
-            <version>1.1</version>
-        </dependency>
 
 
     </dependencies>
@@ -143,7 +124,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
                         <phase>compile</phase>

@@ -6,7 +6,6 @@ import com.example.bookstore.exception.RegistrationException;
 import com.example.bookstore.mapper.UserMapper;
 import com.example.bookstore.model.User;
 import com.example.bookstore.repository.UserRepository;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -20,7 +19,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UserResponseDto register( UserRegistrationRequestDto request)
+    public UserResponseDto register(UserRegistrationRequestDto request)
             throws RegistrationException {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new RegistrationException("Unable to complete registration.");
@@ -31,20 +30,9 @@ public class UserServiceImpl implements UserService {
         user.setEmail(request.getEmail());
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
+        user.setShippingAddress(request.getShippingAddress());
         User savedUser = userRepository.save(user);
 
         return userMapper.toDto(savedUser);
     }
-
-
-
-//{
-//        "email":"fuhjhjhjhjjjjjk@example.com",
-//                "password":"1234",
-//                "repeatPassword":"1335555",
-//                "firstName":"AAAAAAAAAAAA",
-//                "lastName":"AAAAAAAAAAAA",
-//                "adress":"öalfhjlad"
-//
-//    }
 }

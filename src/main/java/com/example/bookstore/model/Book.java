@@ -5,15 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,7 +17,7 @@ import org.hibernate.annotations.Where;
 @Setter
 @NoArgsConstructor
 @Entity
-@SQLDelete(sql = "UPDATE books SET isDeleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE books SET is_deleted = true WHERE id = ?")
 @Where(clause = "is_deleted = false")
 @Table(name = "books")
 public class Book {
@@ -45,7 +38,6 @@ public class Book {
     @Column(nullable = false)
     private boolean isDeleted;
 
-   @ManyToMany
-    private Set<Category> category;
+
 
 }

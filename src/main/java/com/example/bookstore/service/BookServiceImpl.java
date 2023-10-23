@@ -1,23 +1,15 @@
 package com.example.bookstore.service;
 
-
 import com.example.bookstore.dto.BookResponseDto;
 import com.example.bookstore.dto.CreateBookRequestDto;
-import com.example.bookstore.dto.category.BookDtoWithoutCategoryIds;
 import com.example.bookstore.exception.EntityNotFoundException;
 import com.example.bookstore.mapper.BookMapper;
 import com.example.bookstore.model.Book;
 import com.example.bookstore.repository.BookRepository;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @RequiredArgsConstructor
@@ -70,11 +62,4 @@ public class BookServiceImpl implements BookService {
         return bookMapper.toDto(book);
     }
 
-    @Override
-    public List<BookDtoWithoutCategoryIds> findAllBooksByCategoryId(Long categoryId) {
-
-        return bookRepository.findAllByCategoryId(categoryId).stream()
-                .map(x->bookMapper.toDtoWithoutCategories(x))
-                .collect(Collectors.toList());
-    }
 }

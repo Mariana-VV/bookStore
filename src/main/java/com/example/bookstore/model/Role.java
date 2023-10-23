@@ -9,8 +9,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.Getter;
 
 @Data
+@Getter
 @Entity
 @Table(name = "roles")
 public class Role {
@@ -21,8 +23,12 @@ public class Role {
     @Column(nullable = false, unique = true)
     private RoleName name;
 
+    public RoleName getRoleName() {
+        return name;
+    }
+
     enum RoleName {
-        USER,
+       USER,
        ADMIN,
     }
 }
