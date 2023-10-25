@@ -2,8 +2,9 @@ package com.example.bookstore.dto.user;
 
 import com.example.bookstore.model.Role;
 import com.example.bookstore.validation.FieldMatch;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 import java.util.Set;
 import lombok.Data;
 
@@ -15,17 +16,14 @@ import lombok.Data;
         )
 public class UserRegistrationRequestDto {
     @NotBlank
-    @Size(min = 4, max = 50)
+    @Email
     private String email;
-    @NotBlank
-    @Size(min = 4, max = 100)
     private String password;
-    @NotBlank
-    @Size(min = 4, max = 100)
     private String repeatPassword;
+    @NotNull
     private String firstName;
+    @NotNull
     private String lastName;
     private String shippingAddress;
-
     private Set<Role> roles;
 }
