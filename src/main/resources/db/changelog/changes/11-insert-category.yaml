@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-category
+      author: bookstore
+      changes:
+        - insert:
+            tableName: category
+            columns:
+              - column: {name: name, value: "Drama"}
+        - insert:
+            tableName: category
+            columns:
+              - column: {name: name, value: "Horror"}
+

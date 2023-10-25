@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-category-book
+      author: bookstore
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: category_id
+            baseTableName: books_category
+            constraintName: fk2_category_book
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: category
+        - addForeignKeyConstraint:
+            baseColumnNames: book_id
+            baseTableName: books_category
+            constraintName: fk1_category_book
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: NO ACTION
+            onUpdate: NO ACTION
+            referencedColumnNames: id
+            referencedTableName: books

@@ -17,7 +17,7 @@ import org.hibernate.annotations.Where;
 @Setter
 @NoArgsConstructor
 @Entity
-@SQLDelete(sql = "UPDATE books SET isDeleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE books SET is_deleted = true WHERE id = ?")
 @Where(clause = "is_deleted = false")
 @Table(name = "books")
 public class Book {
@@ -38,39 +38,6 @@ public class Book {
     @Column(nullable = false)
     private boolean isDeleted;
 
-    public Book(Long id, String title,
-                String author, String isbn,
-                BigDecimal price, String description,
-                String coverImage, boolean isDeleted) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.isbn = isbn;
-        this.price = price;
-        this.description = description;
-        this.coverImage = coverImage;
-        this.isDeleted = isDeleted;
-    }
 
-    public Book(String title, String author,
-                String isbn, BigDecimal price,
-                String description, String coverImage) {
-        this.title = title;
-        this.author = author;
-        this.isbn = isbn;
-        this.price = price;
-        this.description = description;
-        this.coverImage = coverImage;
-    }
 
-    @Override
-    public String toString() {
-        return "Book{" + "id=" + id
-                + ", title='" + title + '\''
-                + ", author='" + author + '\''
-                + ", isbn='" + isbn + '\''
-                + ", price=" + price
-                + ", description='" + description + '\''
-                + ", coverImage='" + coverImage + '\'' + '}';
-    }
 }

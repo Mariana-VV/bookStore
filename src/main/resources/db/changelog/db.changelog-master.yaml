@@ -3,3 +3,31 @@ databaseChangeLog:
       file: db/changelog/changes/01-create-book-table.yaml
   - include:
       file: db/changelog/changes/02-add-isDeleted-column-to-book-table.yaml
+  - include:
+      file: db/changelog/changes/03-create-users-table.yaml
+  - include:
+      file: db/changelog/changes/04-insert-users-table.yaml
+  - include:
+      file: db/changelog/changes/05-create-roles-table.yaml
+  - include:
+      file: db/changelog/changes/06-insert-book-table.yaml
+  - include:
+      file: db/changelog/changes/07-entcode-password.yaml
+  - include:
+      file: db/changelog/changes/08-insert-role.yaml
+  - include:
+      file: db/changelog/changes/09-create-role-to-user.yaml
+  - include:
+      file: db/changelog/changes/10-create-category.yaml
+  - include:
+      file: db/changelog/changes/11-insert-category.yaml
+  - include:
+      file: db/changelog/changes/12-create-category-book.yaml
+  - include:
+      file: db/changelog/changes/13-insert-user-role.yaml
+  - include:
+      file: db/changelog/changes/14-changes.yaml
+  - include:
+      file: db/changelog/changes/15-insert-category-book.yaml
+  - include:
+      file: db/changelog/changes/16-changes.yaml
